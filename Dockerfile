@@ -13,7 +13,7 @@ RUN set -xe && \
     icloud -h | head -n1
 
 RUN set -xe && \
-    echo -e "#!/bin/sh\nicloudpd /data --username \${USERNAME} --password \${PASSWORD} --size original --auto-delete" > /home/icloud.sh && \
+    echo -e "#!/bin/sh\nicloudpd -d /data --username \${USERNAME} --password \${PASSWORD} --size original --auto-delete" > /home/icloud.sh && \
     chmod +x /home/icloud.sh && \
     echo -e "#!/bin/sh\ncp /usr/share/zoneinfo/\${TZ} /etc/localtime\necho -e \"\${CRON} /home/icloud.sh\" > /home/icloud.crontab\n/usr/bin/crontab /home/icloud.crontab\n/usr/sbin/crond -f -l 8" > /home/entry.sh && \
     chmod +x /home/entry.sh

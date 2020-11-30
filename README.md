@@ -3,7 +3,7 @@
 `https://github.com/ndbroadbent/icloud_photos_downloader`
 
 - use:  
-`docker pull zhfish/icloudpd`
+`docker pull fooozhe/icloudpd`
 
 - volume:  
 `/data`
@@ -16,4 +16,3 @@
 | PASSWORD | pppppp | 
 | TZ | Asia/Shanghai | 
 | CRON | 0 */6 * * * | 
-| RECENT | 500 | 

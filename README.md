@@ -14,5 +14,4 @@
 | ------ | ------ |
 | USERNAME | uuuuuu |
 | PASSWORD | pppppp | 
-| TZ | Asia/Shanghai | 
-| CRON | 0 */6 * * * | 
+| CRON | 0 6 * * * | 

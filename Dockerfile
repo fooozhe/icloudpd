@@ -1,7 +1,7 @@
-FROM alpine:3.9
+FROM alpine:latest
 
 RUN set -xe && \
-    apk add --no-cache python3 tzdata && \
+    apk add --no-cache python3 && \
     python3 -m ensurepip && \
     rm -r /usr/lib/python*/ensurepip && \
     pip3 install --upgrade pip setuptools && \
@@ -12,10 +12,14 @@ RUN set -xe && \
     icloudpd --version && \
     icloud -h | head -n1
 
+RUN apk add tzdata && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo "Asia/Shanghai" > /etc/timezone \
+    && apk del tzdata
+
 RUN set -xe && \
     echo -e "#!/bin/sh\nicloudpd -d /data --username \${USERNAME} --password \${PASSWORD} --size original --auto-delete" > /home/icloud.sh && \
     chmod +x /home/icloud.sh && \
-    echo -e "#!/bin/sh\ncp /usr/share/zoneinfo/\${TZ} /etc/localtime\necho -e \"\${CRON} /home/icloud.sh\" > /home/icloud.crontab\n/usr/bin/crontab /home/icloud.crontab\n/usr/sbin/crond -f -l 8" > /home/entry.sh && \
+    echo -e "#!/bin/sh\necho -e \"\${CRON} /home/icloud.sh\" > /home/icloud.crontab\n/usr/bin/crontab /home/icloud.crontab\n/usr/sbin/crond -f -l 8" > /home/entry.sh && \
     chmod +x /home/entry.sh
 
 CMD ["/home/entry.sh"]
